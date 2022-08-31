@@ -2,6 +2,9 @@ package com.apucafeteria.frontend;
 
 import com.apucafeteria.backend.controllers.ManagerController;
 import com.apucafeteria.models.Menu;
+import com.apucafeteria.models.Order;
+import com.apucafeteria.models.Payment;
+import com.apucafeteria.models.User;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,6 +60,9 @@ public class ManagerMainMenu extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         tblViewOrders = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        btnCheckMenu = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tblViewMenu = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
 
@@ -140,15 +146,18 @@ public class ManagerMainMenu extends javax.swing.JFrame {
 
         mainPanel.addTab("Menu", jPanel1);
 
+        secondPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                secondPanelComponentShown(evt);
+            }
+        });
+
         tblViewCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane3.setViewportView(tblViewCustomer);
@@ -206,6 +215,11 @@ public class ManagerMainMenu extends javax.swing.JFrame {
         txtManagerName.setToolTipText("");
 
         btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Name");
 
@@ -224,13 +238,9 @@ public class ManagerMainMenu extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(txtManagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(6, 6, 6)
+                    .addComponent(jLabel3)
+                    .addComponent(txtManagerPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(txtManagerRole, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,10 +276,21 @@ public class ManagerMainMenu extends javax.swing.JFrame {
 
         mainPanel.addTab("User Group", secondPanel);
 
+        jPanel3.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel3ComponentShown(evt);
+            }
+        });
+
         btnAvailable.setText("Accept");
         btnAvailable.setAutoscrolls(true);
         btnAvailable.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         btnAvailable.setMargin(null);
+        btnAvailable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvailableActionPerformed(evt);
+            }
+        });
 
         btnDecline.setText("Decline");
         btnDecline.setToolTipText("");
@@ -290,6 +311,26 @@ public class ManagerMainMenu extends javax.swing.JFrame {
 
         jLabel5.setText("Incoming Orders");
 
+        btnCheckMenu.setText("Check Menu");
+        btnCheckMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckMenuActionPerformed(evt);
+            }
+        });
+
+        tblViewMenu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(tblViewMenu);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -297,16 +338,20 @@ public class ManagerMainMenu extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbProcessOrder, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(btnAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addComponent(btnDecline, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                            .addComponent(btnAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnDecline, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnCheckMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbProcessOrder, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,12 +361,15 @@ public class ManagerMainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbProcessOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAvailable, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDecline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCheckMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(btnDecline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAvailable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         mainPanel.addTab("Orders", jPanel3);
@@ -388,8 +436,49 @@ public class ManagerMainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_txtManagerRoleActionPerformed
 
     private void mainPanelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_mainPanelComponentShown
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_mainPanelComponentShown
+
+    private void secondPanelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_secondPanelComponentShown
+        LoadCustomerTable("C");
+        LoadManagerTable("A");
+    }//GEN-LAST:event_secondPanelComponentShown
+
+    private void jPanel3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel3ComponentShown
+        LoadOrdersTable();
+        
+    }//GEN-LAST:event_jPanel3ComponentShown
+
+    private void btnCheckMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckMenuActionPerformed
+
+        try {
+            managerController = new ManagerController();
+            managerController.checkOrderMenu(cmbProcessOrder.getSelectedItem().toString(), tblShowMenu);
+        } catch (IOException ex) {
+            Logger.getLogger(ManagerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_btnCheckMenuActionPerformed
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+
+        if(txtManagerName.getText().isEmpty() ||
+            txtManagerPassword.getText().isEmpty() ){
+               JOptionPane.showMessageDialog(null, "Please fill in the empty field.");
+               
+                    
+        }else {
+            managerController = new ManagerController();
+//            managerController.createManager()
+        }
+            
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvailableActionPerformed
+        managerController = new ManagerController();
+//        List<Payment> payments = managerController.findAllMenu();
+    }//GEN-LAST:event_btnAvailableActionPerformed
     
     public void LoadMenuTable(){
         try {
@@ -399,11 +488,63 @@ public class ManagerMainMenu extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel(header, 0);
             for(Menu menu: menus){
                 model.addRow( new String[] { menu.getMenuID(), menu.getName(), menu.getPrice(), menu.getCreatedDate()});
-                
-            }
+            }   
             tblShowMenu.setModel(model);
         } catch (IOException ex) {
             Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void LoadCustomerTable(String role){
+        try {
+            cmbCustomerList.removeAllItems();
+            managerController = new ManagerController();
+            List<User> users = managerController.findAllCustomers(role);
+            String[] header = new String[] {"UUID", "Username", "Status", "Last Active Date","Created Date"};
+            DefaultTableModel model = new DefaultTableModel(header, 0);
+            for(User user: users){
+                model.addRow( new String[] { user.getUUID(), user.getUsername(), user.getStatus(), user.getLastUpdateDate(), user.getCreatedDate()});
+                cmbCustomerList.addItem(user.getUsername());
+            }
+            tblViewCustomer.setModel(model);
+        } catch (IOException ex) {
+            Logger.getLogger(ManagerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void LoadManagerTable(String role){
+        try {
+            managerController = new ManagerController();
+            List<User> users = managerController.findAllManager(role);
+            String[] header = new String[] {"UUID", "Username", "Status", "Last Active Date","Created Date"};
+            DefaultTableModel model = new DefaultTableModel(header, 0);
+            for(User user: users){
+                model.addRow( new String[] { user.getUUID(), user.getUsername(), user.getStatus(), user.getLastUpdateDate(), user.getCreatedDate()});
+            }
+            tblViewManager.setModel(model);
+        } catch (IOException ex) {
+            Logger.getLogger(ManagerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void LoadOrdersTable(){
+        try{
+            managerController = new ManagerController();
+            List<Order> orders = managerController.findAllOrders();
+            String[] header = new String[] {"OrderID", "Username", "Status", "Created Date"};
+            DefaultTableModel model = new DefaultTableModel(header, 0);
+            for(Order order: orders){
+                model.addRow( new String[] { order.getOrderID(), order.getUser().getUsername(), order.getStatus(), order.getCreatedDate()});
+                if(order.getStatus().equals("N")){
+                    cmbProcessOrder.addItem(order.getOrderID());
+                }
+            }
+            tblViewOrders.setModel(model);
+        } catch (IOException ex) {
+            Logger.getLogger(ManagerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.getMessage());
         }
     }
@@ -411,6 +552,7 @@ public class ManagerMainMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddMenu;
     private javax.swing.JButton btnAvailable;
+    private javax.swing.JButton btnCheckMenu;
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDecline;
     private javax.swing.JButton btnRemoveCustomer;
@@ -431,12 +573,14 @@ public class ManagerMainMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel lblMenuPrice;
     private javax.swing.JTabbedPane mainPanel;
     private javax.swing.JTabbedPane secondPanel;
     private javax.swing.JTable tblShowMenu;
     private javax.swing.JTable tblViewCustomer;
     private javax.swing.JTable tblViewManager;
+    private javax.swing.JTable tblViewMenu;
     private javax.swing.JTable tblViewOrders;
     private javax.swing.JTextField txtManagerName;
     private javax.swing.JPasswordField txtManagerPassword;

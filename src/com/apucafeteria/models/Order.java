@@ -3,9 +3,8 @@ package com.apucafeteria.models;
 public class Order {
     public String OrderID;
     public User User;
-    public Menu Menu;
+    public String Menu;
     public String Status;
-    public String ReservedDate;
     public String CreatedDate;
 
     public String getOrderID() {
@@ -24,12 +23,12 @@ public class Order {
         User = user;
     }
 
-    public com.apucafeteria.models.Menu getMenu() {
+    public String getMenu() {
         return Menu;
     }
 
-    public void setMenu(com.apucafeteria.models.Menu menu) {
-        Menu = menu;
+    public void setMenu(String Menu) {
+        this.Menu = Menu;
     }
 
     public String getStatus() {
@@ -38,14 +37,6 @@ public class Order {
 
     public void setStatus(String status) {
         Status = status;
-    }
-
-    public String getReservedDate() {
-        return ReservedDate;
-    }
-
-    public void setReservedDate(String reservedDate) {
-        ReservedDate = reservedDate;
     }
 
     public String getCreatedDate() {
@@ -58,6 +49,6 @@ public class Order {
 
     @Override
     public String toString() {
-        return OrderID + "," + User + "," + Menu + "," + Status + "," + ReservedDate + "," + CreatedDate;
+        return OrderID + "," + User + "," + Menu + "," + Status + "," + CreatedDate;
     }
 }

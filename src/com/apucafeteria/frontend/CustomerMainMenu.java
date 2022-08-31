@@ -16,6 +16,10 @@ public class CustomerMainMenu extends javax.swing.JFrame {
         initComponents();
     }
 
+    public CustomerMainMenu() {
+        initComponents();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -36,8 +40,8 @@ public class CustomerMainMenu extends javax.swing.JFrame {
         btnMenu = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tblShowCart = new javax.swing.JTable();
+        cmbCart = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -47,6 +51,8 @@ public class CustomerMainMenu extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblOrders = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -161,7 +167,13 @@ public class CustomerMainMenu extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Reservation", jPanel2);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jPanel3.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel3ComponentShown(evt);
+            }
+        });
+
+        tblShowCart.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -172,13 +184,18 @@ public class CustomerMainMenu extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tblShowCart);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCart.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Remove");
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Proceed");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -188,7 +205,7 @@ public class CustomerMainMenu extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbCart, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 629, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,7 +219,7 @@ public class CustomerMainMenu extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbCart, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
@@ -264,15 +281,40 @@ public class CustomerMainMenu extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Payment", jPanel5);
 
+        jPanel4.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel4ComponentShown(evt);
+            }
+        });
+
+        tblOrders.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tblOrders);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 674, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 286, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Orders", jPanel4);
@@ -299,11 +341,11 @@ public class CustomerMainMenu extends javax.swing.JFrame {
 
     private void jPanel2ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel2ComponentShown
         try {
-            DefaultTableModel data = customerController.GetAllMenuDetails(cmbMenu);
+            DefaultTableModel data = customerController.GetAllMenuDisplay(cmbMenu);
             tblShowReservation.setModel(data);
         } catch (IOException ex) {
             Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
+            System.out.println(CustomerMainMenu.class.getName() + ":" + ex.getMessage());
         }
     }//GEN-LAST:event_jPanel2ComponentShown
 
@@ -316,9 +358,8 @@ public class CustomerMainMenu extends javax.swing.JFrame {
             lblActiveDate.setText(data[6]);
         } catch (IOException ex) {
             Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println(ex.getMessage());
+            System.out.println(CustomerMainMenu.class.getName() + ":" + ex.getMessage());
         }
-
     }//GEN-LAST:event_jPanel1ComponentShown
 
     private void btnSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignOutActionPerformed
@@ -327,18 +368,63 @@ public class CustomerMainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSignOutActionPerformed
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        
+        try {
+            String menuDetails = cmbMenu.getSelectedItem().toString();
+            customerController.AddNewItemToCart(menuDetails);
+        } catch (IOException ex) {
+            Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(CustomerMainMenu.class.getName() + ":" + ex.getMessage());
+        }
     }//GEN-LAST:event_btnMenuActionPerformed
+
+    private void jPanel3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel3ComponentShown
+         try {
+            DefaultTableModel data = customerController.GetAllCartDisplay(cmbCart);
+            tblShowCart.setModel(data);
+        } catch (IOException ex) {
+            Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(CustomerMainMenu.class.getName() + ":" + ex.getMessage());
+        }
+    }//GEN-LAST:event_jPanel3ComponentShown
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            customerController.CreateOrder(username);
+            DefaultTableModel data = customerController.GetAllCartDisplay(cmbCart);
+            tblShowCart.setModel(data);
+        } catch (IOException ex) {
+            Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(CustomerMainMenu.class.getName() + ":" + ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jPanel4ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel4ComponentShown
+//            List<Order> orders;
+//        try {
+//            orders = customerController.findAllOrders();
+//        } catch (IOException ex) {
+//            Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//            String[] header = new String[] {"OrderID", "Username", "Status", "Created Date"};
+//            DefaultTableModel model = new DefaultTableModel(header, 0);
+//            for(Order order: orders){
+//                model.addRow( new String[] { order.getOrderID(), order.getUser().getUsername(), order.getStatus(), order.getCreatedDate()});
+//                if(order.getStatus().equals("N")){
+//                    cmbProcessOrder.addItem(order.getOrderID());
+//                }
+//            }
+//            tblViewOrders.setModel(model);
+    }//GEN-LAST:event_jPanel4ComponentShown
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnSignOut;
+    private javax.swing.JComboBox<String> cmbCart;
     private javax.swing.JComboBox<String> cmbMenu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -352,12 +438,14 @@ public class CustomerMainMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblActiveDate;
     private javax.swing.JLabel lblUUID;
     private javax.swing.JLabel lblUsername;
+    private javax.swing.JTable tblOrders;
+    private javax.swing.JTable tblShowCart;
     private javax.swing.JTable tblShowReservation;
     // End of variables declaration//GEN-END:variables
 }

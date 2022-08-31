@@ -3,7 +3,7 @@ package com.apucafeteria.models;
 public class Wallet {
 
     public String WalletID;
-    public String UserID;
+    public Object User;
     public String Total;
 
     public String getWalletID() {
@@ -14,12 +14,12 @@ public class Wallet {
         WalletID = walletID;
     }
 
-    public String getUserID() {
-        return UserID;
+    public Object getUser() {
+        return User;
     }
 
-    public void setUserID(String userID) {
-        UserID = userID;
+    public void setUser(Object User) {
+        this.User = User;
     }
 
     public String getTotal() {
@@ -32,6 +32,6 @@ public class Wallet {
 
     @Override
     public String toString() {
-        return "{" + WalletID + "," + UserID + "," + Total + "}";
+        return WalletID + "," + User + "," + Total;
     }
 }
