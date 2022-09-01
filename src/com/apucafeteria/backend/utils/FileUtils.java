@@ -4,12 +4,28 @@ import java.io.*;
 
 public class FileUtils {
     
+    FileInputStream fileStream;
+    InputStreamReader input;
+    BufferedReader reader;
+            
     public BufferedReader read(String filename) throws FileNotFoundException{
         File file = new File(filename);
-        FileInputStream fileStream = new FileInputStream(file);
-        InputStreamReader input = new InputStreamReader(fileStream);
-        BufferedReader reader = new BufferedReader(input);
+        fileStream = new FileInputStream(file);
+        input = new InputStreamReader(fileStream);
+        reader = new BufferedReader(input);
         return reader;
+    }
+    
+    public void close() throws IOException{
+        if(fileStream == null){
+            fileStream.close();
+        }
+        if(input == null){
+            input.close();
+        }
+        if(input == null){
+            reader.close();
+        }
     }
 
     public void write(String filename, String text) throws IOException{
@@ -31,9 +47,9 @@ public class FileUtils {
         int lineCount = 0;
         File file = new File(filename);
         try{
-            var fileStream = new FileInputStream(file);
+            FileInputStream fileStream = new FileInputStream(file);
             InputStreamReader input = new InputStreamReader(fileStream);
-            var reader = new BufferedReader(input);
+            BufferedReader reader = new BufferedReader(input);
             while((data = reader.readLine()) != null) { lineCount++; }
             reader.close();
             input.close(); 

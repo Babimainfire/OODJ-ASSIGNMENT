@@ -7,7 +7,11 @@ import com.apucafeteria.models.Order;
 import com.apucafeteria.models.User;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -45,6 +49,7 @@ public class ManagerController {
                     return true;
                 }
             }
+            utils.close();
         }finally {
             if(reader == null){
                 reader.close();
@@ -72,7 +77,7 @@ public class ManagerController {
                 menu.setCreatedDate(data[3]);
                 menus.add(menu);
             }
-        reader.close();
+            utils.close();
         return menus;
         } finally {
             if(reader == null){
@@ -104,7 +109,7 @@ public class ManagerController {
                     System.out.println(user);
                 }
             }
-            reader.close();
+            utils.close();
             return users;
             } finally {
                 if(reader == null){
@@ -134,10 +139,9 @@ public class ManagerController {
                     user.setLastUpdateDate(data[5]);
                     user.setCreatedDate(data[6]);
                     users.add(user);
-                    System.out.println(user);
                 }
             }
-            reader.close();
+            utils.close();
             return users;
         } finally {
             if(reader == null){
@@ -150,7 +154,10 @@ public class ManagerController {
         try{
             String line;
             List<Order> orders = new LinkedList<>();
-            reader = utils.read(ApplicationPath.Origin.orderTable);
+            File file = new File(ApplicationPath.Origin.orderTable);
+            FileInputStream fileStream = new FileInputStream(file);
+            InputStreamReader input = new InputStreamReader(fileStream);
+            BufferedReader reader = new BufferedReader(input);
             while((line = reader.readLine()) != null){
                 String[] data = line.split("\\[");
                 String[] data2 = data[0].split(",");
@@ -158,7 +165,6 @@ public class ManagerController {
                 String[] data4 = data3[1].split("\\,");
                 User user = new User();
                 Order order = new Order();
-                
                 user.setUUID(data2[1]);
                 user.setUsername(data2[2]);
                 user.setPassword(data2[3]);
@@ -172,16 +178,12 @@ public class ManagerController {
                 order.setCreatedDate(data4[1]);
                 orders.add(order);
             }
-            if(reader == null || reader.equals(""))
-            {
-                reader.close(); 
-            }
+            fileStream.close();
+            input.close();
+            reader.close();
             return orders;
         } finally {
-            if(reader == null || reader.equals(""))
-            {
-                reader.close(); 
-            }
+            
         }
     }
     
@@ -199,9 +201,7 @@ public class ManagerController {
                     return menu;
                 }
             }
-            if(reader == null){
-                reader.close();
-            }
+            utils.close();
             return null;
         } catch (IOException ex) { System.out.println(ex.getMessage()); }  
         finally {
@@ -212,11 +212,51 @@ public class ManagerController {
         return null;
     }
     
+    public void updateOrderStatus(String selectedId, String status) throws IOException {
+        String line;
+        Integer count = 0;
+        File file = new File(ApplicationPath.Origin.orderTable);
+        File temp = new File(ApplicationPath.Temp.orderTable);
+        FileInputStream fileStream = new FileInputStream(file);
+        InputStreamReader input = new InputStreamReader(fileStream);
+        BufferedReader reader = new BufferedReader(input);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(temp, true));
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split(",");
+            String[] data2 = line.split("\\[");
+            String[] data3 = data2[1].split("\\]");
+            String[] data4 = data3[1].split(",");
+            if(selectedId.equals(data[0])){
+                if(count != 0){ writer.append("\r\n"); } 
+                    String c = data2[0] + "[" + data3[0] + "]," + status + "," + data4[2];
+                    writer.append(c);
+            }
+            else if(!selectedId.equals(data[0])) {
+                if(count != 0){ writer.append("\r\n"); }
+                writer.append(line);
+            }
+            count++;
+        }
+        
+        writer.close();
+        reader.close();
+        input.close();
+        fileStream.close();
+        
+        if(file.exists() == true){
+        boolean isDelete = file.delete();
+        System.out.println("updateOrderStatus: " + isDelete);
+        if(isDelete == true){
+            temp.renameTo(file);
+        }
+      }
+    }
+    
     public void checkOrderMenu(String uid, JTable tblMenu)throws IOException{
          try{
             String line;
 //            List<String> menus = new LinkedList<>();
-            reader = utils.read(ApplicationPath.Origin.orderTable);
+//            reader = utils.read(ApplicationPath.Origin.orderTable);
             String[] header = new String[] {"Menu", "Quantity"};
             DefaultTableModel model = new DefaultTableModel(header, 0);
             while((line = reader.readLine()) != null){

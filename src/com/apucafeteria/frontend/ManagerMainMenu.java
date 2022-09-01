@@ -68,12 +68,14 @@ public class ManagerMainMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        mainPanel.setForeground(new java.awt.Color(66, 66, 66));
         mainPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 mainPanelComponentShown(evt);
             }
         });
 
+        jPanel1.setForeground(new java.awt.Color(66, 66, 66));
         jPanel1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 jPanel1ComponentShown(evt);
@@ -282,6 +284,8 @@ public class ManagerMainMenu extends javax.swing.JFrame {
             }
         });
 
+        btnAvailable.setBackground(new java.awt.Color(30, 185, 128));
+        btnAvailable.setForeground(new java.awt.Color(255, 255, 255));
         btnAvailable.setText("Accept");
         btnAvailable.setAutoscrolls(true);
         btnAvailable.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -292,9 +296,16 @@ public class ManagerMainMenu extends javax.swing.JFrame {
             }
         });
 
+        btnDecline.setBackground(new java.awt.Color(255, 104, 89));
+        btnDecline.setForeground(new java.awt.Color(255, 255, 255));
         btnDecline.setText("Decline");
         btnDecline.setToolTipText("");
         btnDecline.setMargin(null);
+        btnDecline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeclineActionPerformed(evt);
+            }
+        });
 
         tblViewOrders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -311,6 +322,8 @@ public class ManagerMainMenu extends javax.swing.JFrame {
 
         jLabel5.setText("Incoming Orders");
 
+        btnCheckMenu.setBackground(new java.awt.Color(255, 207, 68));
+        btnCheckMenu.setForeground(new java.awt.Color(255, 255, 255));
         btnCheckMenu.setText("Check Menu");
         btnCheckMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -446,7 +459,6 @@ public class ManagerMainMenu extends javax.swing.JFrame {
 
     private void jPanel3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel3ComponentShown
         LoadOrdersTable();
-        
     }//GEN-LAST:event_jPanel3ComponentShown
 
     private void btnCheckMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckMenuActionPerformed
@@ -457,8 +469,6 @@ public class ManagerMainMenu extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(ManagerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }//GEN-LAST:event_btnCheckMenuActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
@@ -466,8 +476,6 @@ public class ManagerMainMenu extends javax.swing.JFrame {
         if(txtManagerName.getText().isEmpty() ||
             txtManagerPassword.getText().isEmpty() ){
                JOptionPane.showMessageDialog(null, "Please fill in the empty field.");
-               
-                    
         }else {
             managerController = new ManagerController();
 //            managerController.createManager()
@@ -476,9 +484,20 @@ public class ManagerMainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvailableActionPerformed
-        managerController = new ManagerController();
-//        List<Payment> payments = managerController.findAllMenu();
+        try{
+            managerController = new ManagerController();   
+            managerController.updateOrderStatus(cmbProcessOrder.getSelectedItem().toString(), "Y");
+            LoadOrdersTable();  
+        }   catch(IOException ex){}
     }//GEN-LAST:event_btnAvailableActionPerformed
+
+    private void btnDeclineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeclineActionPerformed
+        try{
+            managerController = new ManagerController();    
+            managerController.updateOrderStatus(cmbProcessOrder.getSelectedItem().toString(), "D");
+            LoadOrdersTable();  
+        }   catch(IOException ex){}
+    }//GEN-LAST:event_btnDeclineActionPerformed
     
     public void LoadMenuTable(){
         try {
@@ -532,6 +551,7 @@ public class ManagerMainMenu extends javax.swing.JFrame {
     
     public void LoadOrdersTable(){
         try{
+            cmbProcessOrder.removeAllItems();
             managerController = new ManagerController();
             List<Order> orders = managerController.findAllOrders();
             String[] header = new String[] {"OrderID", "Username", "Status", "Created Date"};

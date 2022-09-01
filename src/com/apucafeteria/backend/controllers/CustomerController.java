@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -82,9 +83,9 @@ public class CustomerController {
         File file = new File(originFile);
         File temp = new File(tempFile);
         writer = new BufferedWriter(new FileWriter(temp, true));
-        var fileStream = new FileInputStream(ApplicationPath.Origin.userTable);
+        FileInputStream fileStream = new FileInputStream(ApplicationPath.Origin.userTable);
         InputStreamReader input = new InputStreamReader(fileStream);
-        var reader = new BufferedReader(input);
+        BufferedReader reader = new BufferedReader(input);
         while (( line = reader.readLine()) != null) {
             String[] data = line.split("\\,");
             lineCount++;
@@ -116,9 +117,9 @@ public class CustomerController {
     
     public String[] GetUserDetails(String username)throws IOException {
         String line;
-        var fileStream = new FileInputStream(ApplicationPath.Origin.userTable);
+        FileInputStream fileStream = new FileInputStream(ApplicationPath.Origin.userTable);
         InputStreamReader input = new InputStreamReader(fileStream);
-        var reader = new BufferedReader(input);
+        BufferedReader reader = new BufferedReader(input);
         while ((line = reader.readLine()) != null) {
             String[] data = line.split(",");
             if(username.equals(data[1])){
@@ -137,9 +138,9 @@ public class CustomerController {
     public DefaultTableModel GetAllMenuDisplay(JComboBox cmbMenu) throws IOException {
         String line;
         Integer count = 1;
-        var fileStream = new FileInputStream(ApplicationPath.Origin.menuTable);
+        FileInputStream fileStream = new FileInputStream(ApplicationPath.Origin.menuTable);
         InputStreamReader input = new InputStreamReader(fileStream);
-        var reader = new BufferedReader(input);
+        BufferedReader reader = new BufferedReader(input);
         String[] header = new String[] {"No", "Menu ID", "Menu", "Price", "Created Date" };
         DefaultTableModel model = new DefaultTableModel(header, 0);
         while ((line = reader.readLine()) != null)
@@ -163,12 +164,12 @@ public class CustomerController {
         File temp = new File(ApplicationPath.Temp.cartTable);
         try{
             String[] data = selected.split(" - ");
-            var fileStream = new FileInputStream(file);
+            FileInputStream fileStream = new FileInputStream(file);
             InputStreamReader input = new InputStreamReader(fileStream);
-            var reader = new BufferedReader(input);
+            BufferedReader reader = new BufferedReader(input);
             
-            var writer = new BufferedWriter(new FileWriter(file, true));
-            var writerTermp = new BufferedWriter(new FileWriter(temp, false));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            BufferedWriter writerTemp = new BufferedWriter(new FileWriter(temp, true));
 
             //if file line is bigger than 0
             if(util.GetLineCount(ApplicationPath.Origin.cartTable) == 0){
@@ -187,8 +188,7 @@ public class CustomerController {
                     Cart cart = new Cart();
                     Menu menu = GetMenuDetailByID(data[0]);
                     cart.setMenu(menu);
-                    if(data[0].equals(a[0]))
-                    {
+                    if(data[0].equals(a[0])){
                         if (count >= 1) { writer.append("\r\n"); }
                         Integer total = Integer.parseInt(a[4]) + 1;
                         cart.setQuantity(total.toString());
@@ -196,17 +196,20 @@ public class CustomerController {
                         writer.append("\r\n");
                         cart.setQuantity("1");
                     }
-                    if(util.GetLineCount(ApplicationPath.Temp.cartTable) != 0){ writerTermp.append("\r\n"); }
-                    writerTermp.append(cart.toString());
+                    if(util.GetLineCount(ApplicationPath.Temp.cartTable) != 0){ writerTemp.append("\r\n"); }
+                    writerTemp.append(cart.toString());
                     count++;
                 }
-                
                 JOptionPane.showMessageDialog(null, "You have Successfully Added in Cart.");
-                reader.close();
-                input.close(); 
-                fileStream.close();  
-                writerTermp.close();
-                
+                writer.close();
+                writerTemp.close();
+            }
+            
+            reader.close();
+            input.close(); 
+            fileStream.close(); 
+            
+            if(!flag){
                 if(file.exists() == true){
                   boolean isDelete = file.delete();
                   System.out.println("AddNewItemToCart: " + isDelete);
@@ -214,12 +217,6 @@ public class CustomerController {
                       temp.renameTo(file);
                   }
                 }
-            }
-            
-            if(flag){
-                reader.close();
-                input.close(); 
-                fileStream.close();  
             }
         } catch (FileNotFoundException ex) {  System.out.println(CustomerController.class.getName() + " : " + ex.getMessage()); }
         catch (NullPointerException ex) { System.out.println(CustomerController.class.getName() + " : " + ex.getMessage()); }
@@ -231,9 +228,9 @@ public class CustomerController {
         try{
             String line;
             File file = new File(ApplicationPath.Origin.menuTable);
-            var fileStream = new FileInputStream(file);
+            FileInputStream fileStream = new FileInputStream(file);
             InputStreamReader input = new InputStreamReader(fileStream);
-            var reader = new BufferedReader(input);
+            BufferedReader reader = new BufferedReader(input);
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
                 if(id.equals(data[0])){
@@ -261,9 +258,9 @@ public class CustomerController {
             String line;
             List<Cart> carts = new LinkedList();
             File file = new File(ApplicationPath.Origin.cartTable);
-            var fileStream = new FileInputStream(file);
+            FileInputStream fileStream = new FileInputStream(file);
             InputStreamReader input = new InputStreamReader(fileStream);
-            var reader = new BufferedReader(input);
+            BufferedReader reader = new BufferedReader(input);
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
                 Cart cart = new Cart();
@@ -295,9 +292,9 @@ public class CustomerController {
         DefaultTableModel model = new DefaultTableModel(header, 0);
         try{
             File file = new File(ApplicationPath.Origin.cartTable);
-            var fileStream = new FileInputStream(file);
+            FileInputStream fileStream = new FileInputStream(file);
             InputStreamReader input = new InputStreamReader(fileStream);
-            var reader = new BufferedReader(input);
+            BufferedReader reader = new BufferedReader(input);
             
             while ((line = reader.readLine()) != null)
             {
@@ -310,7 +307,6 @@ public class CustomerController {
             reader.close();
             input.close();
             fileStream.close();
-            
             return model;
         } catch (FileNotFoundException ex) {  System.out.println(CustomerController.class.getName() + " : " + ex.getMessage()); }
         catch (NullPointerException ex) { System.out.println(CustomerController.class.getName() + " : " + ex.getMessage()); }
@@ -321,9 +317,9 @@ public class CustomerController {
     public User GetUserDetailByID (String id) throws IOException {
         try{
             String line;
-            var fileStream = new FileInputStream(ApplicationPath.Origin.userTable);
+            FileInputStream fileStream = new FileInputStream(ApplicationPath.Origin.userTable);
             InputStreamReader input = new InputStreamReader(fileStream);
-            var reader = new BufferedReader(input);
+            BufferedReader reader = new BufferedReader(input);
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
                 if(id.equals(data[0])){
@@ -390,9 +386,9 @@ public class CustomerController {
         order.setOrderID(uuid.toString());
         order.setUser(user);
         File file = new File(ApplicationPath.Origin.cartTable);
-        var fileStream = new FileInputStream(file);
+        FileInputStream fileStream = new FileInputStream(file);
         InputStreamReader input = new InputStreamReader(fileStream);
-        var reader = new BufferedReader(input);
+        BufferedReader reader = new BufferedReader(input);
         while ((line = reader.readLine()) != null){
             String[] data = line.split("\\,");
             menuList.add(data[0] + "|" + data[4]);
@@ -415,5 +411,68 @@ public class CustomerController {
     
     public List<Order> findAllOrders() throws IOException{
         return null;
+    }
+    
+    public DefaultTableModel findAllOrderbyUser(String Username) throws IOException {
+        String line;
+        Integer count = 1;
+        String[] header = new String[] {"No", "Order ID", "Status", "Created Date"};
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        try{
+            File file = new File(ApplicationPath.Origin.orderTable);
+            FileInputStream fileStream = new FileInputStream(file);
+            InputStreamReader input = new InputStreamReader(fileStream);
+            BufferedReader reader = new BufferedReader(input);
+            while ((line = reader.readLine()) != null)
+            {   
+                String status = "";
+                String[] data = line.split("\\,");
+                String[] data2 = line.split("\\],");
+                String[] data3 = data2[1].split(",");
+                if(data3[0].equals("Y")) { status = "Approved and Pending to Pay"; }
+                else if(data3[0].equals("N")) { status = "New Order"; }
+                else if(data3[0].equals("D")) { status = "Rejected"; }
+                else if(data3[0].equals("C")) { status = "Completed"; }
+                model.addRow(new String[] {count.toString() ,data[0], status, data3[1]});
+                count++;
+            }
+            
+            reader.close();
+            input.close();
+            fileStream.close();
+            return model;
+        }catch (IOException ex){}
+        return model;
+    }
+    
+    public DefaultTableModel findAllOrderForUserToPay(String username, JLabel label){
+        String line;
+        Integer count = 1;
+        String[] header = new String[] {"No", "Order ID", "Price", "Created Date"};
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        try{
+            File file = new File(ApplicationPath.Origin.orderTable);
+            FileInputStream fileStream = new FileInputStream(file);
+            InputStreamReader input = new InputStreamReader(fileStream);
+            BufferedReader reader = new BufferedReader(input);
+            while ((line = reader.readLine()) != null)
+            {   
+                String[] data = line.split("\\[");
+                String[] data2 = data[1].split("\\]");
+                String[] data3 = line.split("\\],");
+                String[] data4 = data2[1].split(",");
+                System.out.println(data2[0]);
+                if(data4[0].equals("Y")) {
+                    model.addRow(new String[] {count.toString() ,data[0], data[1], data3[1]});
+                    count++;
+                }
+            }
+            
+            reader.close();
+            input.close();
+            fileStream.close();
+            return model;
+        }catch (IOException ex){}
+        return model;
     }
 }

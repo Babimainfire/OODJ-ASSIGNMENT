@@ -43,13 +43,13 @@ public class CustomerMainMenu extends javax.swing.JFrame {
         tblShowCart = new javax.swing.JTable();
         cmbCart = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnProceed = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        tblShowPayment = new javax.swing.JTable();
+        btnPayment = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        lblPrice = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblOrders = new javax.swing.JTable();
@@ -190,10 +190,10 @@ public class CustomerMainMenu extends javax.swing.JFrame {
 
         jButton1.setText("Remove");
 
-        jButton2.setText("Proceed");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnProceed.setText("Proceed");
+        btnProceed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnProceedActionPerformed(evt);
             }
         });
 
@@ -210,7 +210,7 @@ public class CustomerMainMenu extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnProceed, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -223,13 +223,19 @@ public class CustomerMainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnProceed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12))
         );
 
         jTabbedPane1.addTab("Cart", jPanel3);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jPanel5.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel5ComponentShown(evt);
+            }
+        });
+
+        tblShowPayment.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -240,13 +246,18 @@ public class CustomerMainMenu extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(tblShowPayment);
 
-        jButton3.setText("jButton3");
+        btnPayment.setText("Pay");
+        btnPayment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPaymentActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Total :");
 
-        jLabel5.setText("0.00");
+        lblPrice.setText("0.00");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -256,11 +267,11 @@ public class CustomerMainMenu extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addGap(56, 56, 56)
-                        .addComponent(jLabel5)
+                        .addComponent(lblPrice)
                         .addGap(16, 16, 16))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(39, Short.MAX_VALUE))
@@ -272,10 +283,10 @@ public class CustomerMainMenu extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(jLabel5)))
+                        .addComponent(lblPrice)))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
@@ -330,9 +341,10 @@ public class CustomerMainMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -387,7 +399,7 @@ public class CustomerMainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPanel3ComponentShown
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnProceedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProceedActionPerformed
         try {
             customerController.CreateOrder(username);
             DefaultTableModel data = customerController.GetAllCartDisplay(cmbCart);
@@ -396,40 +408,40 @@ public class CustomerMainMenu extends javax.swing.JFrame {
             Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(CustomerMainMenu.class.getName() + ":" + ex.getMessage());
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnProceedActionPerformed
 
     private void jPanel4ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel4ComponentShown
-//            List<Order> orders;
-//        try {
-//            orders = customerController.findAllOrders();
-//        } catch (IOException ex) {
-//            Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//            String[] header = new String[] {"OrderID", "Username", "Status", "Created Date"};
-//            DefaultTableModel model = new DefaultTableModel(header, 0);
-//            for(Order order: orders){
-//                model.addRow( new String[] { order.getOrderID(), order.getUser().getUsername(), order.getStatus(), order.getCreatedDate()});
-//                if(order.getStatus().equals("N")){
-//                    cmbProcessOrder.addItem(order.getOrderID());
-//                }
-//            }
-//            tblViewOrders.setModel(model);
+        try {
+            DefaultTableModel data = customerController.findAllOrderbyUser(username);
+            tblOrders.setModel(data);
+        } catch (IOException ex) {
+            Logger.getLogger(CustomerMainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(CustomerMainMenu.class.getName() + ":" + ex.getMessage());
+        }
     }//GEN-LAST:event_jPanel4ComponentShown
+
+    private void jPanel5ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel5ComponentShown
+        DefaultTableModel data = customerController.findAllOrderForUserToPay(username, lblPrice);
+        tblShowPayment.setModel(data);
+    }//GEN-LAST:event_jPanel5ComponentShown
+
+    private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPaymentActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnPayment;
+    private javax.swing.JButton btnProceed;
     private javax.swing.JButton btnSignOut;
     private javax.swing.JComboBox<String> cmbCart;
     private javax.swing.JComboBox<String> cmbMenu;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -440,12 +452,13 @@ public class CustomerMainMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblActiveDate;
+    private javax.swing.JLabel lblPrice;
     private javax.swing.JLabel lblUUID;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JTable tblOrders;
     private javax.swing.JTable tblShowCart;
+    private javax.swing.JTable tblShowPayment;
     private javax.swing.JTable tblShowReservation;
     // End of variables declaration//GEN-END:variables
 }
